@@ -1,5 +1,7 @@
 $LOAD_PATH << File.expand_path('../../lib', __FILE__)
 
+require 'byebug'
+
 # Test with test/unit for older Rubies
 def gemfile_name
   gemfile = ENV['BUNDLE_GEMFILE']
@@ -49,10 +51,12 @@ class TestDeclarativeTest < TEST_CASE
 
   def test_adds_a_test_method
     called = false
+    byebug
     TEST_CASE.test('some test') { called = true }
     case MINITEST_5
     when false
-      TEST_CASE.new(:test_some_test).run(RUNNER.new) {}
+      #TEST_CASE.new(:test_some_test).run(RUNNER.new) {}
+      TEST_CASE.new("test: some test").run(RUNNER.new) {}
     when true
       TEST_CASE.new(:test_some_test).run {}
     end
